@@ -15,3 +15,5 @@ function zum_hauptmenu() {
 function lernen(){}
 
 function spielen(){}
+
+majo huhu

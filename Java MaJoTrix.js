@@ -16,4 +16,3 @@ function lernen(){}
 
 function spielen(){}
 
-majo huhu

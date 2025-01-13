@@ -14,7 +14,6 @@ function klasse_speichern(){
 }
 
 function zum_hauptmenu() {
-    var klasse = document.getElementById('wahleklasse')
     document.getElementById('klassen-auswahl').style.display = 'none'
     document.getElementById('hauptmenu').style.display = 'block'
 }

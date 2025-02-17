@@ -1,19 +1,19 @@
-// Diese Funktion wird aufgerufen, wenn der Benutzer auf "Spielen" klickt
-function spielen() {
-    document.getElementById('hauptmenu').style.display = 'none'; // Hauptmenü ausblenden
-    document.getElementById('spiel').style.display = 'block'; // Spielbereich einblenden
+document.getElementById('spiell').style.display = 'none'; // Spielbereich ausblenden
+
+function spielenn() {
+    document.getElementById('hauptmenuu').style.display = 'block'; // Hauptmenü ausblenden
+    document.getElementById('spiell').style.display = 'block'; // Spielbereich einblenden
     starteSpiel();
 }
 
-// Spiel wird gestartet
 function starteSpiel() {
-    let spielDiv = document.getElementById('spiel');
+    let spielDiv = document.getElementById('spiell');
 
-    // Hole das Canvas und den Zeichenkontext
-    const canvas = document.getElementById('gameCanvas');
+// Hole das Canvas und den Zeichenkontext
+    const canvas = document.getElementById('gameCanvass');
     const ctx = canvas.getContext('2d');
 
-    // Variablen
+// Variablen
     let score = 0; // Zählt die gefangenen Äpfel
     const basket = {
         width: 80,
@@ -26,11 +26,11 @@ function starteSpiel() {
     let apple = null;     // Aktuell fallender Apfel
     let gameOver = false; // Status des Spiels
 
-    // Variablen zur Steuerung (Pfeiltasten)
-    let leftPressed = false;
-    let rightPressed = false;
+// Variablen zur Steuerung (Pfeiltasten)
+    let leftPressed = false
+    let rightPressed = false;   //damit nicht direkt bewegt wird ohne zu tippen
 
-    // Event-Listener für Tastatureingaben
+// Event-Listener für Tastatureingaben
     document.addEventListener("keydown", keyDownHandler, false);
     document.addEventListener("keyup", keyUpHandler, false);
 
@@ -50,7 +50,7 @@ function starteSpiel() {
         }
     }
 
-    // Erzeugt einen neuen Apfel mit zufälliger Position und Geschwindigkeit
+// Erzeugt einen neuen Apfel mit zufälliger Position und Geschwindigkeit
     function spawnApple() {
         const radius = 15;
         const x = Math.random() * (canvas.width - 2 * radius) + radius;
@@ -59,7 +59,7 @@ function starteSpiel() {
         apple = { x, y, radius, speed };
     }
 
-    // Prüft, ob der Apfel den Korb berührt (einfache Kollisionserkennung)
+// Prüft, ob der Apfel den Korb berührt (einfache Kollisionserkennung)
     function checkCollision(apple, basket) {
         if (
             apple.y + apple.radius >= basket.y &&                       // Apfel erreicht den Korb von oben
@@ -72,7 +72,7 @@ function starteSpiel() {
         return false;
     }
 
-    // Aktualisiert die Positionen der Objekte und prüft auf Kollisionen
+// Aktualisiert die Positionen der Objekte und prüft auf Kollisionen
     function update() {
         if (gameOver) return; // Stoppt das Update, falls das Spiel vorbei ist
 
@@ -106,7 +106,7 @@ function starteSpiel() {
         }
     }
 
-    // Zeichnet alle Elemente neu
+// Zeichnet alle Elemente neu
     function draw() {
         // Leert das Canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -137,7 +137,7 @@ function starteSpiel() {
         }
     }
 
-    // Hauptspielschleife, die ständig aktualisiert und neu zeichnet
+// Hauptspielschleife, die ständig aktualisiert und neu zeichnet
     function gameLoop() {
         update();  // Aktualisiere Positionen und prüfe auf Kollisionen
         draw();    // Zeichne alle Elemente neu
@@ -146,7 +146,8 @@ function starteSpiel() {
         }
     }
 
-    // Spielstart: Erzeuge den ersten Apfel und starte die Schleife
+// Spielstart: Erzeuge den ersten Apfel und starte die Schleife
     spawnApple();
     gameLoop();
+
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MaJorTrix</title>
+  <!-- Das JavaScript wird jetzt am Ende geladen -->
+  <script src="testMajo.js" defer></script>
+
+  <style>
+    /* Hier kannst du deine Styles für das Spiel und die Buttons hinzufügen */
+    #spiel {
+      display: none; /* Spielbereich zu Beginn ausblenden */
+      text-align: center;
+    }
+    canvas {
+      border: 2px solid black;
+    }
+  </style>
+</head>
+<body>
+
+<div id="klassen-auswahl" class="container">
+  <h1>Klassenauswahl</h1>
+  <label for="wahleklasse">Wähle deine Klasse:</label>
+  <select id="wahleklasse">
+    <option value="1./2._klasse">1./2. Klasse</option>
+    <option value="3./4._klasse">3./4. Klasse</option>
+  </select>
+  <br><br>
+  <button onclick="klasse_speichern(); zum_hauptmenu();">Auswahl speichern & zum Hauptmenü</button>
+</div>
+
+<div id="hauptmenu" class="container">
+  <h1>Hauptmenü</h1>
+  <p id="klasse"></p>
+  <p id="sternis"></p>
+  <button onclick="zu_lernen()">LERNEN</button>
+  <button onclick="spielen()">SPIELEN:)</button>
+</div>
+
+<!-- Spielbereich, der nach dem Start eingeblendet wird -->
+<div id="spiel">
+  <h2>Das Spiel läuft!</h2>
+  <canvas id="gameCanvas" width="500" height="400"></canvas>
+</div>
+
+<div id="lernen" class="container">
+  <h2>Rechenaufgaben</h2>
+  <p>Aufgabe <input type="number" id="antwort{i}" />
+  <p id="ergebnis${i}"></p>
+  <button onclick="zum_hauptmenu()">Zurück zum Hauptmenü</button>
+  <div id="aufgaben-container"></div>
+</div>
+
+
+
+</body>
+</html>

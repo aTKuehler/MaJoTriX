@@ -2,10 +2,13 @@
 let klasse = ""
 let sternis = 0
 
-
 document.getElementById('sternis').innerText = "Sternis:" + sternis
 
-document.getElementById('hauptmenu').style.display='none'
+function klassen_auswahl(){
+    document.getElementById('klassen-auswahl').style.display='block'
+    document.getElementById('hauptmenu').style.display='none'
+    document.getElementById('lernen').style.display='none'
+}
 
 function klasse_speichern(){
     let klasse = document.getElementById("wahleklasse").value;
@@ -24,7 +27,7 @@ function zum_hauptmenu() {
 
 function zu_lernen(){
     document.getElementById('hauptmenu').style.display = 'none';
-    document.getElementById('zu_lernen').style.display = 'block';
+    document.getElementById('lernen').style.display = 'block';
 
     if (klasse === "1./2._klasse") {
         neue_aufgaben_12()}
@@ -66,3 +69,4 @@ function antwort_prufen(){
 
 function spielen(){}
 
+klassen_auswahl()

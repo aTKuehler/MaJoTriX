@@ -8,7 +8,6 @@
 <body>
 
 
-
 <div id="klassen-auswahl" class="container">
     <h1>Klassenauswahl</h1>
     <label for="wahleklasse">Wähle deine Klasse:</label>
@@ -19,7 +18,6 @@
     <br><br>
     <button onclick="klasse_speichern(); zum_hauptmenu();">Auswahl speichern & zum Hauptmenü</button>
 </div>
-
 
 <div id="hauptmenu" class="container">
     <h1>Hauptmenü</h1>
@@ -34,21 +32,29 @@
 <div id="lernen" class="container">
     <h2>Rechenaufgaben</h2>
 
-    <p>Aufgabe <input type="number" id="antwort{i}" />
-
-    <p id="ergebnis${i}"></p>
+    <p id="aufgaben"></p>
 
 
 
+
+
+
+
+    <button onclick="antwort_prufen()">Antworten prüfen</button>
     <button onclick="zum_hauptmenu()">Zurück zum Hauptmenü</button>
 
-    <div id="aufgaben-container"></div>
+
 
 </div>
 
-<div>
 
-</div>
+
+
+
+
+
+
+
 
 
 

@@ -10,37 +10,52 @@
 
 
 <div id="klassen-auswahl" class="container">
-    <h1>Wähle deine Klasse</h1>
+    <h1>Klassenauswahl</h1>
+    <label for="wahleklasse">Wähle deine Klasse:</label>
     <select id="wahleklasse">
-        <option value="1">1./2. Klasse</option>
-        <option value="2">3./4. Klasse</option>
+        <option value="1./2._klasse">1./2. Klasse</option>
+        <option value="3./4._klasse">3./4. Klasse</option>
     </select>
     <br><br>
-    <button onclick="zum_hauptmenu()">Zum Hauptmenü</button>
+    <button onclick="klasse_speichern(); zum_hauptmenu();">Auswahl speichern & zum Hauptmenü</button>
 </div>
-
 
 
 <div id="hauptmenu" class="container">
     <h1>Hauptmenü</h1>
+    <p id = "klasse"></p>
     <p id = "sternis"></p>
 
-    <button onclick="lernen()">LERNEN</button>
+    <button onclick="zu_lernen()">LERNEN</button>
     <button onclick="spielen()">SPIELEN</button>
 </div>
 
 
+<div id="lernen" class="container">
+    <h2>Rechenaufgaben</h2>
+
+    <p>Aufgabe <input type="number" id="antwort{i}" />
+
+    <p id="ergebnis${i}"></p>
 
 
 
+    <button onclick="zum_hauptmenu()">Zurück zum Hauptmenü</button>
 
+    <div id="aufgaben-container"></div>
 
-<div id="lernen">
+</div>
+
+<div>
 
 </div>
 
 
+
 <div id="spiel">
+
+
+
 
 </div>
 

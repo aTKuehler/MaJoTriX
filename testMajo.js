@@ -18,7 +18,7 @@ function starteSpiel() {
     const basket = {
         width: 80,
         height: 20,
-        x: canvas.width / 2 - 40,  // Startposition in der Mitte
+        x: canvas.width / 2 - 60,  // Startposition in der Mitte
         y: canvas.height - 30,
         speed: 7
     };
@@ -133,7 +133,8 @@ function starteSpiel() {
         if (gameOver) {
             ctx.fillStyle = "black";
             ctx.font = "30px Arial";
-            ctx.fillText("Game Over", canvas.width / 2 - 80, canvas.height / 2);
+            ctx.fillText("Leider ist das Spiel vorbei :(", canvas.width / 4 - 70, canvas.height / 2);
+            ctx.fillText("Tippe Enter", canvas.width / 3 - 12, canvas.height / 1.5)
         }
     }
 

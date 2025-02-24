@@ -1,154 +1,230 @@
-document.getElementById('spiell').style.display = 'none'; // Spielbereich ausblenden
+// Spielbereich zunächst ausblenden
+document.getElementById('spiel').style.display = 'none';
 
-function spielenn() {
-    document.getElementById('hauptmenuu').style.display = 'block'; // Hauptmenü ausblenden
-    document.getElementById('spiell').style.display = 'block'; // Spielbereich einblenden
-    starteSpiel();
+function spielen() {
+    // Hauptmenü ausblenden und Spielbereich einblenden
+    document.getElementById('hauptmenu').style.display = 'none';
+    document.getElementById('spiel').style.display = 'block';
+    startGame();
 }
 
-function starteSpiel() {
-    let spielDiv = document.getElementById('spiell');
-
-// Hole das Canvas und den Zeichenkontext
-    const canvas = document.getElementById('gameCanvass');
+function startGame() {
+    const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-// Variablen
-    let score = 0; // Zählt die gefangenen Äpfel
+    let score = 0;
+    let gameOver = false;
+
+    // Flag, ob das blaue Objekt aktuell aktiv (also kollisionsrelevant) ist
+    let badItemActive = true;
+    // Flag, damit beim Respawn des blauen Objekts nicht mehrfach der setTimeout gestartet wird
+    let badItemRespawning = false;
+
+    // Korb-Objekt mit Position, Größe und Geschwindigkeit
     const basket = {
         width: 80,
         height: 20,
-        x: canvas.width / 2 - 60,  // Startposition in der Mitte
+        x: canvas.width / 2 - 40,
         y: canvas.height - 30,
         speed: 7
     };
 
-    let apple = null;     // Aktuell fallender Apfel
-    let gameOver = false; // Status des Spiels
+    // Apfel-Objekt (das man einsammeln darf) – sieht jetzt mehr wie ein Apfel aus
+    let apple = {
+        x: Math.random() * (canvas.width - 30) + 15,
+        y: -15,
+        radius: 15,
+        speed: 2 + Math.random() * 3
+    };
 
-// Variablen zur Steuerung (Pfeiltasten)
-    let leftPressed = false
-    let rightPressed = false;   //damit nicht direkt bewegt wird ohne zu tippen
+    // Neues Objekt, das man nicht einsammeln darf (wird in blau dargestellt)
+    let badItem = {
+        x: Math.random() * (canvas.width - 30) + 15,
+        y: -15,
+        radius: 15,
+        speed: 2 + Math.random() * 3
+    };
 
-// Event-Listener für Tastatureingaben
-    document.addEventListener("keydown", keyDownHandler, false);
-    document.addEventListener("keyup", keyUpHandler, false);
+    // Steuerung per Pfeiltasten
+    let leftPressed = false;
+    let rightPressed = false;
 
-    function keyDownHandler(e) {
-        if (e.key === "ArrowLeft") {
-            leftPressed = true;
-        } else if (e.key === "ArrowRight") {
-            rightPressed = true;
+    // Event-Listener für Tastatureingaben
+    document.addEventListener("keydown", keyDown);
+    document.addEventListener("keyup", keyUp);
+
+    function keyDown(e) {
+        // Neustart mit Leertaste, wenn das Spiel vorbei ist
+        if (gameOver && e.key === " ") {
+            document.removeEventListener("keydown", keyDown);
+            startGame();
+            return;
         }
+        if (e.key === "ArrowLeft") leftPressed = true;
+        if (e.key === "ArrowRight") rightPressed = true;
     }
 
-    function keyUpHandler(e) {
-        if (e.key === "ArrowLeft") {
-            leftPressed = false;
-        } else if (e.key === "ArrowRight") {
-            rightPressed = false;
-        }
+    function keyUp(e) {
+        if (e.key === "ArrowLeft") leftPressed = false;
+        if (e.key === "ArrowRight") rightPressed = false;
     }
 
-// Erzeugt einen neuen Apfel mit zufälliger Position und Geschwindigkeit
-    function spawnApple() {
-        const radius = 15;
-        const x = Math.random() * (canvas.width - 2 * radius) + radius;
-        const y = -radius; // Start oberhalb des Canvas
-        const speed = 2 + Math.random() * 3; // Geschwindigkeit zwischen 2 und 5
-        apple = { x, y, radius, speed };
-    }
-
-// Prüft, ob der Apfel den Korb berührt (einfache Kollisionserkennung)
-    function checkCollision(apple, basket) {
-        if (
-            apple.y + apple.radius >= basket.y &&                       // Apfel erreicht den Korb von oben
-            apple.y - apple.radius <= basket.y + basket.height &&         // Apfel befindet sich nicht unter dem Korb
-            apple.x + apple.radius >= basket.x &&                         // Apfel berührt die linke Seite des Korbs
-            apple.x - apple.radius <= basket.x + basket.width             // Apfel berührt die rechte Seite des Korbs
-        ) {
-            return true;
-        }
-        return false;
-    }
-
-// Aktualisiert die Positionen der Objekte und prüft auf Kollisionen
+    // Aktualisiere Positionen und prüfe Kollisionen
     function update() {
-        if (gameOver) return; // Stoppt das Update, falls das Spiel vorbei ist
-
-        // Bewege den Korb entsprechend der gedrückten Pfeiltasten
+        // Korb bewegen
         if (leftPressed) {
             basket.x -= basket.speed;
-            if (basket.x < 0) basket.x = 0; // Nicht über den linken Rand hinaus
+            if (basket.x < 0) basket.x = 0;
         }
         if (rightPressed) {
             basket.x += basket.speed;
-            if (basket.x + basket.width > canvas.width) {
-                basket.x = canvas.width - basket.width; // Nicht über den rechten Rand hinaus
-            }
+            if (basket.x + basket.width > canvas.width)
+                basket.x = canvas.width - basket.width;
         }
 
-        // Falls ein Apfel existiert, aktualisiere seine Position
-        if (apple) {
-            apple.y += apple.speed; // Apfel fällt nach unten
+        // Apfel fällt
+        apple.y += apple.speed;
 
-            // Prüfe, ob der Apfel gefangen wird
-            if (checkCollision(apple, basket)) {
-                score++; // Erhöhe den Score um 1
-                apple = null;
-                // Erzeuge nach einer kurzen, zufälligen Verzögerung einen neuen Apfel
-                setTimeout(spawnApple, 500 + Math.random() * 1000);
-            }
-            // Falls der Apfel den unteren Rand erreicht, ohne gefangen zu werden, ist das Spiel vorbei
-            else if (apple.y - apple.radius > canvas.height) {
-                gameOver = true;
-            }
+        // Kollision: Apfel berührt den Korb?
+        if (
+            apple.y + apple.radius >= basket.y &&
+            apple.x + apple.radius >= basket.x &&
+            apple.x - apple.radius <= basket.x + basket.width
+        ) {
+            score++;
+            // Setze den Apfel zurück an den Anfang
+            apple.x = Math.random() * (canvas.width - 30) + 15;
+            apple.y = -15;
+            apple.speed = 5 + Math.random() * 2;
+        }
+        // Apfel verfehlt den Korb: Spielende
+        else if (apple.y - apple.radius > canvas.height) {
+            gameOver = true;
+        }
+
+        // badItem fällt
+        badItem.y += badItem.speed;
+
+        // Kollision: badItem berührt den Korb? (nur prüfen, wenn aktiv)
+        if (badItemActive &&
+            badItem.y + badItem.radius >= basket.y &&
+            badItem.x + badItem.radius >= basket.x &&
+            badItem.x - badItem.radius <= basket.x + basket.width
+        ) {
+            gameOver = true;
+        }
+        // badItem verfehlt den Korb: Neu spawnen (nur einmal pro Zyklus)
+        else if (badItem.y - badItem.radius > canvas.height && !badItemRespawning) {
+            badItemRespawning = true;
+            badItemActive = false; // Deaktiviere Kollisionsprüfung während der Wartezeit
+            setTimeout(() => {
+                let newX;
+                do {
+                    newX = Math.random() * (canvas.width - 30) + 15;
+                } while (Math.abs(newX - apple.x) < 50); // Mindestabstand von 50px zum Apfel
+
+                badItem.x = newX;
+                badItem.y = -15;
+                badItem.speed = 2 + Math.random() * 3;
+                badItemActive = true;  // Reaktiviere Kollisionsprüfung
+                badItemRespawning = false;
+            }, 2000);
         }
     }
 
-// Zeichnet alle Elemente neu
-    function draw() {
-        // Leert das Canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Zeichnet den Korb als braunes Rechteck
+    // Zeichnet den Korb mit zwei Seitenlinien, die höher gezeichnet werden
+    function drawBasket() {
+        // Hauptteil des Korbs
         ctx.fillStyle = "brown";
         ctx.fillRect(basket.x, basket.y, basket.width, basket.height);
 
-        // Zeichnet den Apfel als roten Kreis (falls vorhanden)
-        if (apple) {
-            ctx.beginPath();
-            ctx.fillStyle = "red";
-            ctx.arc(apple.x, apple.y, apple.radius, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.closePath();
-        }
+        // Seitenlinien
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 4;
 
-        // Zeichnet den Score oben links
+        // Linke Linie: beginnt 20 Pixel über dem Korb
+        ctx.beginPath();
+        ctx.moveTo(basket.x, basket.y - 20);
+        ctx.lineTo(basket.x, basket.y + basket.height);
+        ctx.stroke();
+
+        // Rechte Linie: beginnt 20 Pixel über dem Korb
+        ctx.beginPath();
+        ctx.moveTo(basket.x + basket.width, basket.y - 20);
+        ctx.lineTo(basket.x + basket.width, basket.y + basket.height);
+        ctx.stroke();
+    }
+
+    // Zeichnet den Apfel mit zusätzlichem Stil (Stiel und Blatt)
+    function drawApple() {
+        // Apfelkörper
+        ctx.fillStyle = "red";
+        ctx.beginPath();
+        ctx.arc(apple.x, apple.y, apple.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+
+        // Apfelstiel
+        ctx.strokeStyle = "brown";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(apple.x, apple.y - apple.radius);
+        ctx.lineTo(apple.x, apple.y - apple.radius - 10);
+        ctx.stroke();
+        ctx.closePath();
+
+        // Apfelblatt
+        ctx.fillStyle = "green";
+        ctx.beginPath();
+        if (ctx.ellipse) {
+            ctx.ellipse(apple.x + 5, apple.y - apple.radius - 10, 4, 6, Math.PI / 4, 0, 2 * Math.PI);
+        } else {
+            ctx.arc(apple.x + 5, apple.y - apple.radius - 10, 4, 0, 2 * Math.PI);
+        }
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    // Zeichnet das schlechte Objekt (badItem) in einer anderen Farbe (blau)
+    function drawBadItem() {
+        ctx.fillStyle = "blue";
+        ctx.beginPath();
+        ctx.arc(badItem.x, badItem.y, badItem.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    // Zeichnet alle Elemente (Korb, Apfel, badItem, Score, Game Over)
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBasket();
+        drawApple();
+        drawBadItem();
+
+        // Score anzeigen
         ctx.fillStyle = "black";
         ctx.font = "20px Arial";
         ctx.fillText("Score: " + score, 10, 25);
 
-        // Falls das Spiel vorbei ist, zeige "Game Over"
+        // Bei Spielende "Game Over" anzeigen
         if (gameOver) {
-            ctx.fillStyle = "black";
             ctx.font = "30px Arial";
-            ctx.fillText("Leider ist das Spiel vorbei :(", canvas.width / 4 - 70, canvas.height / 2);
-            ctx.fillText("Tippe Enter", canvas.width / 3 - 12, canvas.height / 1.5)
+            ctx.fillText("Game Over", canvas.width / 2 - 80, canvas.height / 2);
+            ctx.font = "20px Arial";
+            ctx.fillText("Drücke Leertaste zum Neustarten", canvas.width / 2 - 140, canvas.height / 2 + 40);
         }
     }
 
-// Hauptspielschleife, die ständig aktualisiert und neu zeichnet
+    // Hauptspielschleife
     function gameLoop() {
-        update();  // Aktualisiere Positionen und prüfe auf Kollisionen
-        draw();    // Zeichne alle Elemente neu
         if (!gameOver) {
-            requestAnimationFrame(gameLoop); // Wiederhole die Schleife, solange das Spiel läuft
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        } else {
+            draw();
         }
     }
 
-// Spielstart: Erzeuge den ersten Apfel und starte die Schleife
-    spawnApple();
     gameLoop();
-
 }

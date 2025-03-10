@@ -1,14 +1,14 @@
 // Spielbereich zunächst ausblenden
-document.getElementById('spiel').style.display = 'none';
+document.getElementById('spiel').style.display = 'none'
 
 function spielen() {
     // Hauptmenü ausblenden und Spielbereich einblenden
     document.getElementById('hauptmenu').style.display = 'none';
     document.getElementById('spiel').style.display = 'block';
-    startGame();
+    startSpiel();
 }
 
-function startGame() {
+function startSpiel() {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -57,7 +57,7 @@ function startGame() {
         // Neustart mit Leertaste, wenn das Spiel vorbei ist
         if (gameOver && e.key === " ") {
             document.removeEventListener("keydown", keyDown);
-            startGame()
+            startSpiel()
             return
         }
         if (e.key === "ArrowLeft") leftPressed = true;
@@ -133,13 +133,13 @@ function startGame() {
     }
 
     // Zeichnet den Korb mit zwei Seitenlinien, die höher gezeichnet werden
-    function drawBasket() {
+    function zeichnenKorb() {
         // Hauptteil des Korbs
         ctx.fillStyle = "brown";
         ctx.fillRect(basket.x, basket.y, basket.width, basket.height);
 
         // Seitenlinien
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "brown";
         ctx.lineWidth = 4;
 
         // Linke Linie: beginnt 20 Pixel über dem Korb
@@ -156,7 +156,7 @@ function startGame() {
     }
 
     // Zeichnet den Apfel mit zusätzlichem Stil (Stiel und Blatt)
-    function drawApple() {
+    function zeichnenApfel() {
         // Apfelkörper
         ctx.fillStyle = "red";
         ctx.beginPath();
@@ -186,20 +186,39 @@ function startGame() {
     }
 
     // Zeichnet das schlechte Objekt (badItem) in einer anderen Farbe (blau)
-    function drawBadItem() {
-        ctx.fillStyle = "blue";
+    function zeichnenBombe() {
+        ctx.fillStyle = "black";
         ctx.beginPath();
         ctx.arc(badItem.x, badItem.y, badItem.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(badItem.x, badItem.y - badItem.radius);
+        ctx.lineTo(badItem.x, badItem.y - badItem.radius - 10);
+        ctx.stroke();
+        ctx.closePath();
+
+        // Apfelblatt
+        ctx.fillStyle = "yellow";
+        ctx.beginPath();
+        if (ctx.ellipse) {
+            ctx.ellipse(badItem.x + 5, badItem.y - badItem.radius - 10, 4, 6, Math.PI / 4, 0, 2 * Math.PI);
+        } else {
+            ctx.arc(badItem.x + 5, badItem.y - badItem.radius - 10, 4, 0, 2 * Math.PI);
+        }
         ctx.fill();
         ctx.closePath();
     }
 
     // Zeichnet alle Elemente (Korb, Apfel, badItem, Score, Game Over)
-    function draw() {
+    function zeichnen() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawBasket();
-        drawApple();
-        drawBadItem();
+        zeichnenKorb();
+        zeichnenApfel();
+        zeichnenBombe();
 
         // Score anzeigen
         ctx.fillStyle = "black";
@@ -219,10 +238,10 @@ function startGame() {
     function gameLoop() {
         if (!gameOver) {
             update();
-            draw();
+            zeichnen();
             requestAnimationFrame(gameLoop);
         } else {
-            draw();
+            zeichnen();
         }
     }
 

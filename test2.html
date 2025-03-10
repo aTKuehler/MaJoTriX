@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Apfel Spiel</title>
+    <script async src="Java MaJoTrix.js"></script> <!-- Falls das Spiel hier drin ist -->
+    <script defer src="testMajo.js"></script> <!-- Deine JavaScript-Datei mit Spiel-Logik -->
+    <style>
+        .container {
+            display: none;
+            text-align: center;
+        }
+        #klassen-auswahl {
+            display: block;
+        }
+        canvas {
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<!-- KLASSENAUSWAHL -->
+<div id="klassen-auswahl" class="container">
+    <h1>Klassenauswahl</h1>
+    <label for="wahleklasse">Wähle deine Klasse:</label>
+    <select id="wahleklasse">
+        <option value="1./2._klasse">1./2. Klasse</option>
+        <option value="3./4._klasse">3./4. Klasse</option>
+    </select>
+    <br><br>
+    <button onclick="klasse_speichern(); zum_hauptmenu();">Auswahl speichern & zum Hauptmenü</button>
+</div>
+
+<!-- HAUPTMENÜ -->
+<div id="hauptmenu" class="container">
+    <h1>Hauptmenü</h1>
+    <p id="klasse"></p>
+    <p id="sternis"></p>
+
+    <button onclick="zu_lernen()">LERNEN</button>
+    <button onclick="spielen()">SPIELEN</button>
+</div>
+
+<!-- LERNEN -->
+<div id="lernen" class="container">
+    <h2>Rechenaufgaben</h2>
+    <p id="aufgaben"></p>
+    <button onclick="antwort_prufen()">Antworten prüfen</button>
+    <button onclick="zum_hauptmenu()">Zurück zum Hauptmenü</button>
+</div>
+
+<!-- SPIELBEREICH -->
+<div id="spiel" class="container">
+    <h2>Das Spiel läuft!</h2>
+    <canvas id="gameCanvas" width="500" height="400"></canvas>
+    <button onclick="zum_hauptmenu()">Zurück zum Hauptmenü</button>
+</div>
+
+<script>
+    // Funktionen zum Wechseln der Bereiche
+    function zum_hauptmenu() {
+        document.getElementById("klassen-auswahl").style.display = "none"
+        document.getElementById("hauptmenu").style.display = "block"
+        document.getElementById("lernen").style.display = "none"
+        document.getElementById("spiel").style.display = "none"
+    }
+
+    function zu_lernen() {
+        document.getElementById("hauptmenu").style.display = "none"
+        document.getElementById("lernen").style.display = "block"
+    }
+
+    function spielen() {
+        // Verstecke das Hauptmenü und den Lernbereich
+        document.getElementById("hauptmenu").style.display = "block"
+        document.getElementById("lernen").style.display = "none"
+
+        // Zeige den Spielbereich
+        document.getElementById("spiel").style.display = "block"
+
+        // Starte das Spiel, wenn der Spielbereich sichtbar ist
+        startGame();  // Diese Funktion muss in testMajo.js definiert sein
+    }
+
+    // Beispiel für das Speichern der Klassenauswahl in localStorage
+    function klasse_speichern() {
+        var klasse = document.getElementById("wahleklasse").value
+        localStorage.setItem("klasse", klasse);
+        document.getElementById("klasse").innerText = "Ausgewählte Klasse: " + klasse
+    }
+</script>
+
+</body>
+</html>

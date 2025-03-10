@@ -4,33 +4,6 @@ let sternis = 0
 
 document.getElementById('sternis').innerText = "Sternis:" + sternis
 
-function klassen_auswahl(){
-    document.getElementById('klassen-auswahl').style.display='block'
-    document.getElementById('hauptmenu').style.display='none'
-    document.getElementById('lernen').style.display='none'
-}
-
-function klasse_speichern(){
-    let klasse = document.getElementById("wahleklasse").value;
-    console.log(klasse)
-    document.getElementById("klasse").innerText = "Ausgewählte Klasse: " + klasse
-    zum_hauptmenu()
-
-}
-
-function zum_hauptmenu() {
-    let klasse = document.getElementById('wahleklasse')
-    document.getElementById('klassen-auswahl').style.display = 'none'
-    document.getElementById('hauptmenu').style.display = 'block'
-    console.log(klasse)
-}
-
-function zu_lernen(){
-    document.getElementById('klassen-auswahl').style.display = 'none'
-    document.getElementById('hauptmenu').style.display = 'none'
-    document.getElementById('lernen').style.display = 'block'
-
-    console.log("Aufgaben42")
 
 // HIER SCHEITERTS AN DER IF FUNKTION!!!
     if (klasse === "1./2._klasse") {
@@ -80,6 +53,5 @@ function antwort_prufen(){
 
 
 
-function spielen(){}
 
 klassen_auswahl()

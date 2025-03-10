@@ -57,8 +57,8 @@ function startGame() {
         // Neustart mit Leertaste, wenn das Spiel vorbei ist
         if (gameOver && e.key === " ") {
             document.removeEventListener("keydown", keyDown);
-            startGame();
-            return;
+            startGame()
+            return
         }
         if (e.key === "ArrowLeft") leftPressed = true;
         if (e.key === "ArrowRight") rightPressed = true;

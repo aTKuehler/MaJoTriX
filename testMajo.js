@@ -12,6 +12,8 @@ function startSpiel() {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
+
+
     let score = 0;
     let gameOver = false;
 
@@ -187,13 +189,13 @@ function startSpiel() {
 
     // Zeichnet das schlechte Objekt (badItem) in einer anderen Farbe (blau)
     function zeichnenBombe() {
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "darkgoldenrod";
         ctx.beginPath();
         ctx.arc(badItem.x, badItem.y, badItem.radius, 0, Math.PI * 2);
         ctx.fill();
         ctx.closePath();
 
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "brown";
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(badItem.x, badItem.y - badItem.radius);
@@ -202,7 +204,7 @@ function startSpiel() {
         ctx.closePath();
 
         // Apfelblatt
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "darkgoldenrod";
         ctx.beginPath();
         if (ctx.ellipse) {
             ctx.ellipse(badItem.x + 5, badItem.y - badItem.radius - 10, 4, 6, Math.PI / 4, 0, 2 * Math.PI);

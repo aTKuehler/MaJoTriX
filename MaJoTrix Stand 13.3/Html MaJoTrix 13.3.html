@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script async src="Java MaJoTrix.js"></script>
+</head>
+<body>
+
+<div id="klassen_auswahl" class="container">
+    <h1>Klassenauswahl</h1>
+    <label for="wahleklasse">Wähle deine Klasse:</label>
+    <select id="wahleklasse">
+        <option value="12klasse">1./2. Klasse</option>
+        <option value="34klasse">3./4. Klasse</option>
+    </select>
+    <br><br>
+    <button onclick="klasse_speichern(); zum_hauptmenu();">Auswahl speichern & zum Hauptmenü</button>
+</div>
+
+<div id="hauptmenu" class="container">
+    <h1>Hauptmenü</h1>
+    <p id="klasse"></p>
+    <p id="sternis"></p>
+
+    <button onclick="zu_lernen()">LERNEN</button>
+    <button onclick="spielen()">SPIELEN</button>
+</div>
+
+<div id="lernen" class="container">
+    <h2>Rechenaufgaben</h2>
+    <p id="aufgaben"></p>
+    <button onclick="antwort_prufen()">Antworten prüfen</button>
+    <button onclick="zum_hauptmenu()">Zurück zum Hauptmenü</button>
+</div>
+
+<div id="spiel"></div>
+
+</body>
+</html>

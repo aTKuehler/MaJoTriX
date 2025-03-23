@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>MaJorTrix Lernspiel</title>
+    <script async src="Java_MaJoTrix_voll.js"></script>
+    <link rel="stylesheet" href="CSS_MaJoTrix.css">
+    <style>
+        .container {
+            display: none;
+            text-align: center;
+        }
+        #klassen-auswahl {
+            display: block;
+        }
+        canvas {
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<div id="klassen_auswahl" class="container">
+    <h1>Klassenauswahl 📙</h1>
+    <label for="wahleklasse">In welche Klasse gehst du?:</label>
+    <select id="wahleklasse">
+        <option value="1./ 2. Klasse">1./ 2. Klasse</option>
+        <option value="3./ 4. Klasse">3./ 4. Klasse</option>
+    </select>
+    <br><br>
+    <br><br>
+    <button onclick="klasse_speichern(); zum_hauptmenu()">Auswahl speichern & zum Hauptmenü 🏠</button>
+</div>
+
+<div id="hauptmenu" class="container">
+    <h1>Hauptmenü 🏠</h1>
+    <p id="klasse"></p>
+    <p id="sternis"></p>
+
+    <br><br>
+    <h3>Was möchtest du tun?</h3>
+    <button onclick="zu_lernen()">LERNEN 🧑‍🏫</button>
+    <button id = "spielen_button" onclick="spielen()">SPIELEN 🎲</button>
+    <button onclick="zu_einstellungen()">Einstellungen & Infos ⚙️💡</button>
+    <br><br>
+    <p id="keine_sterne"></p>
+</div>
+
+<div id="einstellungen" class="container">
+    <h1>Einstellungen ⚙️</h1>
+    <p>Du bist in einer anderen Klassenstufe? Drücke hier:</p>
+    <button onclick="klassen_auswahl()">zur Klassenauswahl 📙</button>
+    <br><br>
+    <p>Deine Sternis ⭐ sind im Browser gespeichert. Sie bleiben bestehen, wenn du das Programm/ Fenster schließt oder den PC herunterfährst. :)
+        <br>Du kannst deine Sternis ⭐ hier auf 0 zurücksetzen:</p>
+    <button id="sternis_zurücksetzen" onclick="sternis_zurücksetzen()">Sternis ⭐ zurücksetzen</button>
+    <br><br>
+    <br><br>
+    <button onclick="zum_hauptmenu()">zurück zum Hauptmenü 🏠</button>
+    <br><br>
+
+    <h1>Informationen zum Programm 💡</h1>
+
+    <p>MaJorTrix ist ein Lernspiel für Grundschüler.</p>
+    <p>So funktionierts: 💡</p>
+    <p>     Der Schüler/ die Schülerin gelangt über den Knopf "LERNEN" zu einer Reihe an Rechenaufgaben.
+        <br>Die jeweiligen Lösungen werden per Tastatur in einem Feld oder mit Pfeilen daneben eingeben.
+        <br>Wurden alle Aufgaben überprüft und richtig beantwortet, bekommt der Schüler/ die Schülerin einen Sterni ⭐.
+        <br>Mit einem Sterni ⭐ kann man jeweils eine Runde über den Knopf "SPIELEN" spielen.</p>
+
+    <p>Die Rechenaufgaben für die 1./ 2.Klasse befinden sich im Zahlenraum bis 20. Die Differenz bei Minus-Aufgaben geht nicht unter 0.</p>
+    <p>Die Rechenaufgaben für die 3./ 4.Klasse befinden sich im Zahlenraum bis 100. Die Differenz bei Minus-Aufgaben geht nicht unter 0.
+        <br>Multiplikationsaufgaben entsprechen dem kleinen Einmaleins. Bei Divisionsaufgaben gibt es immer eine ganzzahlige Lösung ohne Rest.</p>
+
+    <br><br>
+    <p> So funktioniert das Spiel :)</p>
+    <p> Im Spielfeld befindet sich ein beweglicher Korb, welcher mit der linken/rechten Pfeiltaste in die jeweilige Richtung gesteuert werden kann.
+        <br> Ziel des Spiels ist es, die roten Äpfel mit dem Korb einzufangen, bevor sie an dem Korb vorbeifallen.
+        <br> Ebenfalls gibt es faule Äpfel, diese dürfen nicht von dem Korb berührt und aufgesammelt werden.
+        <br> Wenn die faulen Äpfel mit dem Korb berührt werden, dann ist das Spiel verloren.
+        <br> Wenn die roten Äpfel den Boden berühren und nicht von dem Korb eingesammelt werden, ist das Spiel verloren.
+    </p>
+    <br><br>
+    <p><u>MaJorTrix</u> wurde entwickelt von: <u>Ma</u>lina Wiederhold, <u>Jo</u>nas Heinemann, <u>Tri</u>stan Kühler</p>
+    <p>2025</p>
+    <br><br>
+    <button onclick="zum_hauptmenu()">zurück zum Hauptmenü 🏠</button>
+
+</div>
+
+
+<div id="lernen" class="container">
+    <h2>Rechenaufgaben 🧮</h2>
+    <p id="aufgaben"></p>
+    <p id="ruckmeldung"> </p>
+    <br><br>
+
+    <button id="prufen_button" onclick="antwort_prufen()">Antworten prüfen 🔎</button>
+    <button onclick="zum_hauptmenu()">Zurück zum Hauptmenü 🏠</button>
+    <button id="neue_aufgaben" onclick="zu_lernen()">Neue Aufgaben 🧮</button>
+
+</div>
+
+
+<div id="spiel" class="container">
+    <h2>Das Spiel läuft!</h2>
+    <canvas id="gameCanvas" width="500" height="400"></canvas>
+    <br><br>
+    <button onclick="zum_hauptmenu()">Zurück zum Hauptmenü</button>
+    <button id ="nochmal_spielen" onclick="spielen()">Nochmal spielen</button>
+</div>
+
+
+</body>
+</html>

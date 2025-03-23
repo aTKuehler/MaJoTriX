@@ -1,0 +1,103 @@
+/* 🌟 Hintergrund für die gesamte Seite */
+body, html {
+    font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    background: linear-gradient(to bottom, #a8e6cf, #dcedc1);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Sicherstellen, dass der Hintergrund die ganze Seite füllt */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 🎮 Container (Spiel, Menü, etc.) – jetzt größer! */
+.container {
+    display: none;
+    background: white;
+    padding: 30px; /* Mehr Innenabstand */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 30px auto; /* Mehr Außenabstand */
+    width: 90%; /* Größerer Container */
+    max-width: 700px; /* Mehr Platz */
+}
+
+/* 🏆 Überschriften */
+h1, h2, h3 {
+    color: #ff6f61;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Mehr Abstand nach unten */
+}
+
+/* 🎨 Styling für alle Buttons */
+button {
+    background: #ffcc5c;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 12px 25px; /* Größere Buttons */
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+    margin: 10px; /* Mehr Abstand zwischen den Buttons */
+    display: inline-block;
+}
+
+/* ✨ Hover-Effekt für klickbare Buttons */
+button:hover {
+    background: #ff6f61;
+    transform: scale(1.1);
+}
+
+/* 🛑 Styling für deaktivierte (disabled) Buttons */
+button:disabled {
+    background: #b0b0b0;
+    color: #666666;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* 📌 Dropdown-Menü */
+select {
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #ff6f61;
+    background: white;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 15px 0; /* Abstand zum nächsten Element */
+}
+
+/* 🎲 Spiel-Canvas jetzt größer! */
+canvas {
+    border: 4px solid #ff6f61;
+    background: #fdfd96;
+    border-radius: 10px;
+    width: 550px; /* Breiteres Spielfeld */
+    height: 450px; /* Höheres Spielfeld */
+    margin-top: 20px;
+}
+
+/* ⭐ Anzeige für Score, Highscore & Sternis */
+#scoreAnzeige, #highscoreAnzeige, #sterniAnzeige {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffcc5c;
+    margin-bottom: 10px;
+}
+
+/* 🎮 Score- und Highscore-Anzeige */
+#spiel p {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff6f61;
+    margin: 15px 0; /* Mehr Abstand zwischen den Elementen */
+}
